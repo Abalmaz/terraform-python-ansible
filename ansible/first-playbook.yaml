@@ -1,0 +1,34 @@
+---
+- name: Configure
+  hosts: gcp
+  vars_files: 
+    - project-vars
+  tasks:
+  - name: Update apt repo
+    become: yes
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  - name: Install nginx
+    apt:
+      name: nginx 
+      state: latest
+    become: yes
+  - name: start nginx
+    service:
+      name: nginx
+      state: started
+  - name: Ensure nginx is running
+    shell: ps aux | grep nginx 
+    register: nginx_proc
+  - debug: msg={{nginx_proc.stdout_lines}}
+
+- name: Create new user for
+  hosts: gcp
+  tasks:
+  - name: Create user
+    become: yes
+    user:
+      name: ansible
+      comment: Ansible Admin
+      group: root
+    register: user_creation_result
+  - debug: msg={{user_creation_result}}

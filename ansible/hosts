@@ -1,0 +1,7 @@
+[gcp]
+34.134.178.239
+34.121.255.65
+
+[gcp:vars]
+ansible_ssh_private_key_file=/home/yana/.ssh/id_rsa_gcp_jenkins
+ansible_user=yabalmaz
